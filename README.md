@@ -45,12 +45,23 @@
 }
 ```
 
-## Usage
+## Installation & Usage
+
+### Getting the Model Files
+**⚠️ Important**: This repository contains only the configuration files. The large model weights are not included to avoid GitHub storage limits.
+
+To use Kreas, you need to obtain the model files separately:
+- `model-00001-of-00002.safetensors` (~5GB)
+- `model-00002-of-00002.safetensors` (~3.1GB) 
+- `tokenizer.json` (~11MB)
+
+Place these files in the same directory as the configuration files from this repository.
 
 ### With LM Studio
-1. Load the model in LM Studio
-2. Adjust temperature and other sampling parameters 
-3. Load model into VRAM
+1. Ensure you have all model files (safetensors + tokenizer.json) in the directory
+2. Load the model in LM Studio
+3. Adjust temperature and other sampling parameters 
+4. Load model into VRAM
 
 ### System Requirements
 - **VRAM**: Minimum 8GB, recommended 16GB+
@@ -61,28 +72,6 @@
 - **Temperature**: 0.7-0.9 for creative tasks, 0.1-0.3 for analytical tasks
 - **Top-p**: 0.8-0.95
 - **Max Tokens**: 128k context token cap
-
-## Capabilities
-
-### Text Generation
-- Creative writing and storytelling
-- Technical documentation
-- Code generation and explanation
-- Academic writing assistance
-
-### Analysis & Reasoning
-- Complex problem decomposition
-- Multi-step reasoning
-- Data interpretation
-- Strategic planning
-
-### Conversation
-- Natural dialogue flow
-- Context retention across long conversations
-- Adaptive communication style
-- Multi-turn task completion
-
-## Model Architecture Details
 
 The model employs several advanced architectural features:
 
