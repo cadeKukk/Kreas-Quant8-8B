@@ -1,0 +1,13 @@
+# Exclude large model files (too big for GitHub)
+*.safetensors
+model-*.safetensors
+tokenizer.json
+
+# System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db 
