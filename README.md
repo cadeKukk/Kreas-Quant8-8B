@@ -2,7 +2,7 @@
 
 **Kreas** is an ~8.2-billion parameter language model designed for creative problem-solving and adaptive responses across a wide range of tasks. It is built directly on the **Qwen3-8B architecture** and quantized to **8-bit precision (group size 64)**, delivering strong performance while maintaining efficient resource usage.
 
-> **⚠️ A note on the repository name**: This repository is named `Kreas-Quant4-12B` for historical reasons, but the name is inaccurate. The actual model weights are **8-bit quantized** (not 4-bit) and the architecture has **~8.2 billion parameters** (not 12 billion). All specifications below reflect the real configuration shipped in `config.json`.
+> **Note**: This repository was previously named `Kreas-Quant4-12B`, which misstated the quantization and parameter count. It has been renamed to `Kreas-Quant8-8B` to match the actual configuration: 8-bit quantized weights on a ~8.2 billion parameter architecture. All specifications below reflect the real configuration shipped in `config.json`.
 
 ## Model Overview
 
