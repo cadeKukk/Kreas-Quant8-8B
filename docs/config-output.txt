@@ -1,0 +1,9 @@
+Architecture: Qwen3ForCausalLM
+Layers: 36
+Hidden size: 4096
+Attention heads: 32
+Key/value heads: 8
+Position limit: 131072
+Quantization: 8 bits
+Group size: 64
+Weights: not included in this repository

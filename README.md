@@ -1,113 +1,45 @@
-# Kreas - Kreative Response Engine for Adaptive Solutions
+# Kreas
 
-**Kreas** is an ~8.2-billion parameter language model designed for creative problem-solving and adaptive responses across a wide range of tasks. It is built directly on the **Qwen3-8B architecture** and quantized to **8-bit precision (group size 64)**, delivering strong performance while maintaining efficient resource usage.
-## Model Overview
+Configuration files for a Qwen3-8B model with 8-bit quantization and a group size of 64. This repository does not include model weights or the tokenizer vocabulary, so a clone alone cannot generate text.
 
-- **Model Type**: Causal language model (`qwen3`)
-- **Base Architecture**: Qwen3-8B
-- **Parameters**: ~8.2 billion
-- **Quantization**: 8-bit precision with group size 64
-- **Context Length**: 131,072 tokens (128k context window)
+## Inspect the configuration
 
-## Key Features
-
-### Creative Intelligence
-- **Adaptive Problem Solving**: Adjusts node structure from feedback
-- **Context-Aware Responses**: Leverages extensive 128k token context window
-
-### Technical Specifications
-- **Hidden Size**: 4,096 dimensions
-- **Intermediate (MLP) Size**: 12,288 dimensions
-- **Attention Heads**: 32 (with 8 key-value heads for efficiency)
-- **Hidden Layers**: 36 transformer blocks
-- **Vocabulary Size**: 151,936 tokens
-- **Activation Function**: SiLU (Swish) for improved gradient flow
-
-These dimensions are identical to Qwen3-8B and work out to approximately 8.2 billion parameters (embeddings and LM head are untied).
-
-### Optimization Features
-- **Efficient Attention**: Grouped Query Attention (GQA) for faster inference
-- **Extended Context**: YARN scaling enables 4x context extension from base 32k to 128k tokens
-- **BFloat16 Precision**: Optimal balance of speed and numerical stability
-
-## Model Configuration
-
-```json
-{
-  "architectures": ["Qwen3ForCausalLM"],
-  "model_type": "qwen3",
-  "num_hidden_layers": 36,
-  "hidden_size": 4096,
-  "intermediate_size": 12288,
-  "num_attention_heads": 32,
-  "num_key_value_heads": 8,
-  "max_position_embeddings": 131072,
-  "vocab_size": 151936,
-  "quantization": {
-    "bits": 8,
-    "group_size": 64
-  }
-}
+```sh
+python3 docs/inspect_config.py
 ```
 
-## Installation & Usage
+This demo reads the committed `config.json` and needs only Python's standard library. Its saved output is in [config-output.txt](docs/config-output.txt).
 
-### Getting the Model Files
-**⚠️ Important**: This repository contains only the configuration files. The large model weights are not included to avoid GitHub storage limits.
+```text
+Architecture: Qwen3ForCausalLM
+Layers: 36
+Hidden size: 4096
+Attention heads: 32
+Key/value heads: 8
+Position limit: 131072
+Quantization: 8 bits
+Group size: 64
+Weights: not included in this repository
+```
 
-To use Kreas, you need to obtain the model files separately:
-- `model-00001-of-00002.safetensors` (~5.3GB)
-- `model-00002-of-00002.safetensors` (~3.4GB)
-- `tokenizer.json` (~11MB)
+## What the files specify
 
-Place these files in the same directory as the configuration files from this repository.
+| Setting | Value |
+| --- | --- |
+| Model type | `qwen3` |
+| Intermediate size | 12,288 |
+| Vocabulary size | 151,936 |
+| Activation | `silu` |
+| Declared tensor dtype | `bfloat16` |
+| RoPE scaling | YaRN, factor 4, original limit 32,768 |
+| Tied embeddings | No |
 
-### With LM Studio
-1. Ensure you have all model files (safetensors + tokenizer.json) in the directory
-2. Load the model in LM Studio
-3. Adjust temperature and other sampling parameters
-4. Load model into VRAM
+The position limit is a configuration value. This repository has no benchmark results validating output quality at that length.
 
-### System Requirements
-- **VRAM**: Minimum 12GB, recommended 16GB+ (the 8-bit weights alone are ~8.7GB)
-- **Storage**: ~9GB for model files
-- **GPU**: NVIDIA CUDA or APPLE MLX
+## Load the model
 
-### Recommended Settings
-- **Temperature**: 0.7-0.9 for creative tasks, 0.1-0.3 for analytical tasks
-- **Top-p**: 0.8-0.95
-- **Max Tokens**: 128k context token cap
+Obtain the matching weight shards and `tokenizer.json` separately, then place them alongside the configuration files. The original file set used two shards named `model-00001-of-00002.safetensors` and `model-00002-of-00002.safetensors`.
 
-The model employs several advanced architectural features inherited from Qwen3:
+Use a runtime that supports the supplied weight format and quantization. The configuration files do not demonstrate compatibility with every loader. Check the original model's license before distributing the weights.
 
-- **YARN RoPE Scaling**: Enables extrapolation to longer sequences while maintaining quality
-- **Grouped Query Attention**: Reduces memory bandwidth requirements during inference
-- **SiLU Activation**: Provides smooth, non-monotonic activation for better gradient flow
-- **RMSNorm**: Efficient normalization with epsilon of 1e-06
-
-## Limitations
-
-- Generated content should be verified for factual accuracy
-- May occasionally produce inconsistent responses for highly specialized domains
-- Performance degrades with extremely long context (approaching 128k limit)
-- Quantization may introduce minor quality trade-offs compared to full precision
-
-## License & Usage
-
-This model is derived from the Qwen3-8B architecture. Please refer to the original Qwen3 license terms and ensure compliance with applicable usage policies.
-
-## Technical Support
-
-For issues related to:
-- Model loading or compatibility
-- Performance optimization
-- Integration questions
-
-Please consult your inference platform's documentation or community forums.
-
----
-
-**Version**: Quantized 8-bit edition (group size 64)  
-**Base Architecture**: Qwen3-8B  
-**Parameters**: ~8.2 billion  
-**Release**: Community optimized version
+The repository has no recorded inference demo. The example above reports configuration values and does not imply a successful model run.
