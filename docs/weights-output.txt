@@ -1,0 +1,5 @@
+model-00001-of-00002.safetensors: 573 tensors, 5.32 GB, format mlx
+model-00002-of-00002.safetensors: 334 tensors, 3.38 GB, format mlx
+Tensors: 907 (653 BF16, 254 U32)
+Quantized layers: 254 at 8 bits
+Model parameters: 8,190,735,360 (8.19 billion)
